@@ -77,7 +77,7 @@ for xi, yi in zip(X, Y):
 
 st.download_button(
     label="Download .dat Airfoil File",
-    data=dat_string,
+    data=dat_string.encode("ascii", "ignore"),
     file_name=f"{naca}.dat",
     mime="text/plain"
 )
