@@ -1,7 +1,6 @@
 import streamlit as st
 import numpy as np
 import matplotlib.pyplot as plt
-from scipy.interpolate import UnivariateSpline
 
 st.set_page_config(page_title="NACA 4-Digit Airfoil Generator", layout="wide")
 
@@ -34,22 +33,9 @@ xl = x + z*np.sin(theta)
 yl = yc - z*np.cos(theta)
 
 fig, ax = plt.subplots(figsize=(10, 4))
-if smooth==True:
-    spline_xu = UnivariateSpline(np.arange(len(xu)), xu, s=1e-6)
-    spline_yu = UnivariateSpline(np.arange(len(yu)), yu, s=1e-6)
-    spline_xl = UnivariateSpline(np.arange(len(xl)), xl, s=1e-6)
-    spline_yl = UnivariateSpline(np.arange(len(yl)), yl, s=1e-6)
 
-    ux=spline_xu(np.arange(len(xu)))
-    uy=spline_yu(np.arange(len(yu)))
-    lx=spline_xl(np.arange(len(xl)))
-    ly=spline_yl(np.arange(len(yl)))
-
-else:
-    ux,uy,lx,ly=xu,yu,xl,yl
-
-ax.plot(ux, uy, 'b', label='Upper Surface')
-ax.plot(lx, ly, 'r', label='Lower Surface')
+ax.plot(xu, yu, 'b', label='Upper Surface')
+ax.plot(xl, yl, 'r', label='Lower Surface')
 ax.plot(x, yc, 'k--', label='Mean Camber Line')
 
 ax.axis('equal')
@@ -58,26 +44,5 @@ ax.set_ylabel("y / Chord")
 ax.set_title(naca)
 ax.legend()
 ax.grid(True, alpha=0.3)
-if smooth==True:
-    ax.text(0.05, 0.95, "Smoothing: ON", transform=ax.transAxes,
-            fontsize=10, color="green", verticalalignment="top")
-else:
-    ax.text(0.05, 0.95, "Smoothing: OFF", transform=ax.transAxes,
-            fontsize=10, color="red", verticalalignment="top")
-
 
 st.pyplot(fig)
-
-X = np.concatenate([ux[::-1], lx[1:]])
-Y = np.concatenate([uy[::-1], ly[1:]])
-
-dat_string = f"{naca}\n"
-for xi, yi in zip(X, Y):
-    dat_string += f"{xi:.6f}  {yi:.6f}\n"
-
-st.download_button(
-    label="Download .dat Airfoil File",
-    data=dat_string.encode("ascii", "ignore"),
-    file_name=f"{naca}.dat",
-    mime="text/plain"
-)
