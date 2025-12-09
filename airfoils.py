@@ -5,7 +5,6 @@ import matplotlib.pyplot as plt
 st.set_page_config(page_title="NACA 4-Digit Airfoil Generator", layout="wide")
 st.title("NACA 4-Digit Airfoil Visualizer")
 st.sidebar.header("Airfoil Parameters")
-r = st.sidebar.slider("Rotation (in degrees)", 0, 90, 0, 1)
 m = st.sidebar.slider("Maximum Camber (m)", 0.00, 0.09, 0.02, 0.01)
 p = st.sidebar.slider("Position of Max Camber (p)", 0.0, 0.9, 0.4, 0.1)
 t = st.sidebar.slider("Maximum Thickness (t)", 0.01, 0.3, 0.12, 0.01)
