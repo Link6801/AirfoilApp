@@ -7,6 +7,8 @@ st.sidebar.header("Airfoil Parameters")
 with st.sidebar:
     choice = st.selectbox( "Choose an Airfoil Family",["NACA 4-Digit Series","NACA 5-Digit Series"],index=0)
     if choice=="NACA 4-Digit Series":
+        sp = st.sidebar.slider("Cosine Spacing", 50, 70, 60 ,1)
+        st.sidebar.caption("*Warning: 60 is the sweet spot, higher values may cause artifacting in XLFR5*")
         m = st.sidebar.slider("Maximum Camber (m)", 0.00, 0.09, 0.02, 0.01)
         p = st.sidebar.slider("Position of Max Camber (p)", 0.0, 0.9, 0.4, 0.1)
         t = st.sidebar.slider("Maximum Thickness (t)", 0.01, 0.3, 0.12, 0.01)
@@ -15,7 +17,7 @@ with st.sidebar:
         else:
             naca = f"NACA {int(m*100)}{int(p*10)}0{int(t*100)}"
         st.sidebar.write(f"**Selected Airfoil:** {naca}")
-        x = 0.5 * (1 - np.cos(np.linspace(0, np.pi, 200)))
+        x = 0.5 * (1 - np.cos(np.linspace(0, np.pi, sp)))
         z = (t/0.2)*(0.2969*np.sqrt(x) - 0.1260*x - 0.3516*x**2 + 0.2843*x**3 - 0.1015*x**4)
 
         yc = np.where(x < p,
@@ -49,3 +51,16 @@ ax.legend()
 ax.grid(True, alpha=0.3)
 
 st.pyplot(fig)
+
+X = np.concatenate([xu[::-1], xl[1:]])
+Y = np.concatenate([yu[::-1], yl[1:]])
+
+dat_text = f"{naca} Airfoil"
+for xi, yi in zip(X, Y):
+    dat_text += f"\n  {xi:.6f} {yi:.6f}"
+        
+st.download_button(
+label="Download .dat file",
+data=dat_text,
+file_name=f"{naca}.dat",
+mime="text/plain")
