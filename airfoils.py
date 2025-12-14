@@ -34,7 +34,7 @@ with st.sidebar:
         yl = yc - z*np.cos(theta)
 
     elif choice=="NACA 5-Digit Series":
-        print("Work in Progress")
+        st.sidebar.markdown("Work in Progress")
         
 n=choice.split("Series")
 st.title(n[0]+"Airfoil Visualizer")
