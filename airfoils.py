@@ -10,7 +10,7 @@ with st.sidebar:
         sp = st.sidebar.slider("Cosine Spacing", 50, 70, 60 ,1)
         st.sidebar.caption("*Warning: 60 is the sweet spot, higher values may cause artifacting in XLFR5*")
         m = st.sidebar.slider("Maximum Camber (m)", 0.00, 0.09, 0.02, 0.01)
-        p = st.sidebar.slider("Position of Max Camber (p)", 0.0, 0.9, 0.4, 0.1)
+        p = st.sidebar.slider("Position of Max Camber (p)", 0.1, 0.9, 0.4, 0.1)
         t = st.sidebar.slider("Maximum Thickness (t)", 0.01, 0.3, 0.12, 0.01)
         if t>=0.10:
             naca = f"NACA {int(m*100)}{int(p*10)}{int(t*100)}"
