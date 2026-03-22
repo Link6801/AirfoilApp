@@ -36,31 +36,35 @@ with st.sidebar:
     elif choice=="NACA 5-Digit Series":
         st.sidebar.markdown("Work in Progress")
         
-n=choice.split("Series")
-st.title(n[0]+"Airfoil Visualizer")
-fig, ax = plt.subplots(figsize=(10, 4))
-ax.plot(xu, yu, 'b', label='Upper Surface')
-ax.plot(xl, yl, 'r', label='Lower Surface')
-ax.plot(x, yc, 'k--', label='Mean Camber Line')
+try:
+    n=choice.split("Series")
+    st.title(n[0]+"Airfoil Visualizer")
+    fig, ax = plt.subplots(figsize=(10, 4))
+    ax.plot(xu, yu, 'b', label='Upper Surface')
+    ax.plot(xl, yl, 'r', label='Lower Surface')
+    ax.plot(x, yc, 'k--', label='Mean Camber Line')
 
-ax.axis('equal')
-ax.set_xlabel("x / Chord")
-ax.set_ylabel("y / Chord")
-ax.set_title(naca)
-ax.legend()
-ax.grid(True, alpha=0.3)
+    ax.axis('equal')
+    ax.set_xlabel("x / Chord")
+    ax.set_ylabel("y / Chord")
+    ax.set_title(naca)
+    ax.legend()
+    ax.grid(True, alpha=0.3)
 
-st.pyplot(fig)
+    st.pyplot(fig)
 
-X = np.concatenate([xu[::-1], xl[1:]])
-Y = np.concatenate([yu[::-1], yl[1:]])
+    X = np.concatenate([xu[::-1], xl[1:]])
+    Y = np.concatenate([yu[::-1], yl[1:]])
 
-dat_text = f"{naca} Airfoil"
-for xi, yi in zip(X, Y):
-    dat_text += f"\n  {xi:.6f} {yi:.6f}"
-        
-st.download_button(
-label="Download .dat file",
-data=dat_text,
-file_name=f"{naca}.dat",
-mime="text/plain")
+    dat_text = f"{naca} Airfoil"
+    for xi, yi in zip(X, Y):
+        dat_text += f"\n  {xi:.6f} {yi:.6f}"
+            
+    st.download_button(
+    label="Download .dat file",
+    data=dat_text,
+    file_name=f"{naca}.dat",
+    mime="text/plain")
+except Exception as e:
+    st.markdown(e)
+    st.markdown(f"{choice} is under construction, you patience is appreciated.")
