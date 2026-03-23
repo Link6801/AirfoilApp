@@ -2,7 +2,7 @@ import streamlit as st
 import numpy as np
 import matplotlib.pyplot as plt
 
-st.set_page_config(page_title="FoilLabs - Geometry Simplified", layout="wide")
+st.set_page_config(page_title="FoilLabs - Geometry Simplified", page_icon="✈️",layout="wide")
 st.sidebar.header("Airfoil Parameters")
 with st.sidebar:
     choice = st.selectbox( "Choose an Airfoil Family",["NACA 4-Digit Series","NACA 5-Digit Series"],index=0)
