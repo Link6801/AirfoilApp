@@ -34,6 +34,26 @@ with st.sidebar:
         yl = yc - z*np.cos(theta)
 
     elif choice=="NACA 5-Digit Series":
+        sp = st.sidebar.slider("Cosine Spacing", 50, 70, 60 ,1)
+        st.sidebar.caption("*Warning: 60 is the sweet spot, higher values may cause artifacting in XLFR5*")
+        l = st.sidebar.slider("Lift Coefficient (m)", 0.15, 1.35, 0.30, 0.15)
+        p = st.sidebar.slider("Position of Max Camber (p)", 0.05, 0.40, 0.10, 0.05)
+        col1, col2 = st.columns([4,1],vertical_alignment="center")
+        with col1:
+            st.write("Reflex Camber?")
+        with col2:
+            ref = st.toggle(label="reflex", label_visibility="collapsed")
+        if ref:
+            re=1
+        else:
+            re=0
+        t = st.sidebar.slider("Maximum Thickness (t)", 0.01, 0.3, 0.12, 0.01)
+        if t>=0.10:
+            naca = f"NACA {int(l/0.15)}{int(p/0.05)}{re}{int(t*100)}"
+        else:
+            naca = f"NACA {int(l/0.15)}{int(p/0.05)}{re}0{int(t*100)}"
+        st.sidebar.write(f"**Selected Airfoil:** {naca}")
+
         st.sidebar.markdown("Work in Progress")
         
 try:
