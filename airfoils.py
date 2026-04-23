@@ -49,9 +49,9 @@ with st.sidebar:
             re=0
         t = st.sidebar.slider("Maximum Thickness (t)", 0.01, 0.3, 0.12, 0.01)
         if t>=0.10:
-            naca = f"NACA {int(l/0.15)}{int(p/0.05)}{re}{int(t*100)}"
+            naca = f"NACA {int(l/0.15)}{int(p*20)}{re}{int(t*100)}"
         else:
-            naca = f"NACA {int(l/0.15)}{int(p/0.05)}{re}0{int(t*100)}"
+            naca = f"NACA {int(l/0.15)}{int(p*20)}{re}0{int(t*100)}"
         st.sidebar.write(f"**Selected Airfoil:** {naca}")
 
         st.sidebar.markdown("Work in Progress")
